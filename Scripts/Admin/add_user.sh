@@ -1,17 +1,24 @@
 #!/bin/bash
 
-adduser $2 -m 
-echo -e "$3\n$3" | passwd $2
-usermod -aG users $2
-setquota -u $2 $5 $5 $5 $5 /home
-domain=$1
-email=$4
-sitesEnabled='/etc/httpd/sites-enabled/'
-sitesAvailable='/etc/httpd/sites-available/'
-userDir='/var/www/'
-sitesAvailabledomain=$sitesAvailable$domain.conf
+if [ check_user_exists.sh $2 == "YES" ]; then
 
-### don't modify from here unless you know what you are doing ####
+	echo -e $"This User already exists.\nPlease Try Another one"
+	exit;
+else 
+
+	adduser $2 -m 
+	echo -e "$3\n$3" | passwd $2
+	usermod -aG users $2
+	setquota -u $2 $5 $5 $5 $5 /home
+	domain=$1
+	email=$4
+	sitesEnabled='/etc/httpd/sites-enabled/'
+	sitesAvailable='/etc/httpd/sites-available/'
+	userDir='/var/www/'
+	sitesAvailabledomain=$sitesAvailable$domain.conf
+fi
+
+
 
 if [ "$(whoami)" != 'root' ]; then
 	echo $"You have no permission to run $0 as on-root user. Use sudo"
@@ -26,23 +33,22 @@ do
 done
 
 
-### if root dir starts with '/', don't use /var/www as default starting point
 rootDir=$userDir$1
 
 
-### check if domain already exists
+
 if [ -e $sitesAvailabledomain ]; then
 	echo -e $"This domain already exists.\nPlease Try Another one"
 	exit;
 fi
 
-### check if directory exists or not
+
 if ! [ -d $rootDir ]; then
-	### create the directory
+
 	mkdir $rootDir
-	### give permission to root dir
+
 	chmod 755 $rootDir
-	### write test file in the new domain dir
+
 	if ! echo "<?php echo phpinfo(); ?>" > $rootDir/phpinfo.php
 	then
 		echo $"ERROR: Not able to write in file $rootDir/phpinfo.php. Please check permissions"
@@ -52,7 +58,9 @@ if ! [ -d $rootDir ]; then
 	fi
 fi
 
-### create virtual host rules file
+
+echo "($2:$1)" >> /home/user_domain
+
 if ! echo "
 <VirtualHost *:80>
 	ServerAdmin $email
@@ -74,12 +82,30 @@ then
 	echo -e $"There is an ERROR creating $domain file"
 	exit;
 else
+	ln -s $sitesAvailable$domain.conf $sitesEnabled
+	touch $rootDir/index.html
+	echo "
+		<html>
+
+		  <head>
+
+		    <title>Welcome to $1!</title>
+
+		  </head>
+
+		  <body>
+
+		    <h1>Success! The $1 virtual host is working for $2!</h1>
+
+		  </body>
+
+		</html>" > $rootDir/index.html
 	echo -e $"\nNew Virtual Host Created on http protocol\n"
 fi
 
 
 
-### Add domain in /etc/hosts
+
 if ! echo "127.0.0.1	$domain" >> /etc/hosts
 then
 	echo $"ERROR: Not able to write in /etc/hosts"
@@ -111,12 +137,10 @@ else
 fi
 
 
-
-### restart Apache
 systemctl restart httpd
 systemctl restart vsftpd
 
-### show the finished message
+
 echo -e $"Complete! \nYou now have a new Virtual Host \nYour new host is: http://$domain \nAnd its located at $rootDir"
 exit;
 

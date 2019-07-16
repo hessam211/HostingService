@@ -2,7 +2,7 @@
 
 egrep -i "^$1:" /etc/passwd;
 if [ $? -eq 0 ]; then
-   echo "User Exists"
+   echo "YES"
 else
-   echo "User does not exist"
+   echo "NO"
 fi
