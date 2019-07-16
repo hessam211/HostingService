@@ -1,6 +1,9 @@
 #!/bin/bash
 
-if [ check_user_exists.sh $2 == "YES" ]; then
+#state=/bin/bash ./check_user_exists.sh $2
+
+if [ "$state" != "NO" ]; 
+then
 
 	echo -e $"This User already exists.\nPlease Try Another one"
 	exit;
@@ -20,9 +23,10 @@ fi
 
 
 
-if [ "$(whoami)" != 'root' ]; then
+if [ "$(whoami)" != 'root' ]; 
+then
 	echo $"You have no permission to run $0 as on-root user. Use sudo"
-		exit 1;
+	exit 1;
 fi
 
 
