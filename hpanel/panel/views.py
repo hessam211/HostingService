@@ -3,6 +3,9 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from .models import Profile, User
 from django.contrib.auth.decorators import login_required
+from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.mixins import LoginRequiredMixin
 # Create your views here.
 
 
@@ -37,13 +40,12 @@ def admin_panel(request):
     return HttpResponse('not admin')
     #return render(request, 'admin-panel.html', {'q2': q2})
 
-
 @login_required(login_url='login')
-def user_create(request):
+def user_view(request):
     q2 = Profile.objects.filter(is_admin=True)
     use = request.user
+    q1 = User.objects.all()
     for q in q2:
         if use == q.user:
-            return HttpResponse('Im admin')
-
-    return HttpResponse('not admin')
+            return render(request, 'profile_list.html', {'q1': q1})
+    return HttpResponse('You are Not admin')
