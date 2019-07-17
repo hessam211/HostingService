@@ -73,6 +73,15 @@
 						</button>
 					</div>
 
+				</form>
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url 'logout' %}">
+					{% csrf_token %}
+                    <div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn">
+							Log Out
+						</button>
+					</div>
+
 					<div class="w-full text-center p-t-55">
 						<span class="txt2">
 							Designed by Hessam Hashemizadeh and Mahya Jamshidian

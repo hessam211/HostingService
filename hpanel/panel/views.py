@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from .models import Profile, User
 from django.contrib.auth.decorators import login_required
 from .forms import UserForm, ProfileForm
@@ -71,3 +71,10 @@ def user_update_form(request, pk):
         return redirect("profile_list")
     else:
         return render(request, 'admin-panel.html')
+
+
+@login_required(login_url='login')
+def logout_form(request):
+    if request.method == "POST":
+        logout(request)
+    return redirect('login')
