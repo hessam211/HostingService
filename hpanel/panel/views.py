@@ -56,15 +56,15 @@ def user_view(request):
 @login_required(login_url='login')
 def user_update(request, pk):
     q1 = User.objects.filter(id=pk)
-    form = UserForm(instance=request.user)
-    form_profile = ProfileForm(instance=request.user.profile)
+    form = UserForm(instance=q1[0])
+    form_profile = ProfileForm(instance=q1[0].profile)
     return render(request, 'profile_detail.html', {'q1': q1, 'form': form, 'form_profile': form_profile})
 
 @login_required(login_url='login')
 def user_update_form(request, pk):
-    #q1 = User.objects.filter(id=pk)
-    form = UserForm(request.POST, instance=request.user)
-    form_profile = ProfileForm(request.POST, instance=request.user.profile)
+    q1 = User.objects.filter(id=pk)
+    form = UserForm(request.POST, instance=q1[0])
+    form_profile = ProfileForm(request.POST, instance=q1[0].profile)
     if form.is_valid() and form_profile.is_valid():       # username = form.cleaned_data.get('username')
         form.save()
         form_profile.save()

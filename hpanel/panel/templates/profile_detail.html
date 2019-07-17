@@ -76,18 +76,29 @@
 						</span>
 
 					</div>
-					<div class="wrap-input100 validate-input">
+
+					<div class="wrap-input100">
 						<input id="{{ form_profile.domain_name.id_for_label }}" class="input100" type="text" name="{{ form_profile.domain_name.html_name }}" value='{{ form_profile.domain_name.value|default_if_none:"Domain" }}'>
 						<span class="focus-input100"></span>
 					</div>
-										<div class="p-t-13 p-b-9">
+                    <!--div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Is Admin?
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input" data-validate="Check Privilege">
+						<input id="{{ form_profile.is_admin.id_for_label }}" class="input100" type="checkbox" name="{{ form_profile.is_admin.html_name }}" value='{{ form_profile.is_admin.value|default_if_none:"False" }}'>
+						<span class="focus-input100"></span>
+					</div-->
+                    <div class="p-t-13 p-b-9">
 						<span class="txt1">
 							Capacity
 						</span>
 
 					</div>
 					<div class="wrap-input100 validate-input" data-validate="Capacity is required">
-						<input id="{{ form_profile.capacity.id_for_label }}" class="input100" type="number" step="any" name="{{ form_profile.capacity.html_name }}" value='{{ form_profile.capacity.value|default_if_none:"is Admin" }}'>
+						<input id="{{ form_profile.capacity.id_for_label }}" class="input100" type="number" step="any" name="{{ form_profile.capacity.html_name }}" value='{{ form_profile.capacity.value|default_if_none:"Capacity" }}'>
 						<span class="focus-input100"></span>
 					</div>
 
