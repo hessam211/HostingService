@@ -2,6 +2,7 @@ from django.shortcuts import render, HttpResponse, redirect
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from .models import Profile, User
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -22,15 +23,27 @@ def login_form(request):
             return HttpResponse("user doesn't exist")
         return redirect('admin-panel')
     else:
-        return HttpResponse('not valid form')
+        return render(request, 'admin-panel.html')
 
 
+@login_required(login_url='login')
 def admin_panel(request):
     q2 = Profile.objects.filter(is_admin=True)
     use = request.user
     for q in q2:
         if use == q.user:
-            return HttpResponse('is admin')
+            return render(request, 'admin-panel.html')
 
     return HttpResponse('not admin')
     #return render(request, 'admin-panel.html', {'q2': q2})
+
+
+@login_required(login_url='login')
+def user_create(request):
+    q2 = Profile.objects.filter(is_admin=True)
+    use = request.user
+    for q in q2:
+        if use == q.user:
+            return HttpResponse('Im admin')
+
+    return HttpResponse('not admin')
