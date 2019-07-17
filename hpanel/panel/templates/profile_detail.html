@@ -24,47 +24,68 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
 <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href='{% static "vendor/perfect-scrollbar/perfect-scrollbar.css" %}'>
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
 	<link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
 <!--===============================================================================================-->
 </head>
 <body>
-<div class="limiter">
-    <div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
-        <div class="container-table100">
-            <div class="wrap-table100">
-                <div class="table100">
-                    <table>
-                        <thead>
-                            <tr class="table100-head">
-                                <th class="column1">Username</th>
-                                <th class="column2">Is Admin</th>
-                                <th class="column3">Email Address</th>
-                                <th class="column4">Domain Name</th>
-                                <th class="column5">Maximum Capacity</th>
-                                <th class="column6">Edit</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in q1 %}
-                            <tr>
-                                <td class="column1">{{ user.username }}</td>
-                                <td class="column2">{{ user.profile.is_admin }}</td>
-                                <td class="column3">{{ user.email }}</td>
-                                <td class="column4">{{ user.profile.domain_name }}</td>
-                                <td class="column5">{{ user.profile.capacity}}</td>
-                                <td class="column6">{{ user.profile.capacity}}</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+				<form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
+					<span class="login100-form-title p-b-53">
+						{{user.profile.domain_name}}
+					</span>
+
+
+					<!--div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Username
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input id="{{ form.username.id_for_label }}" class="input100" type="text" name="{{ form.username.html_name }}" value='{{ form.username.value|default_if_none:"username"}}' >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input id="{{ form.password.id_for_label }}" class="input100" type="password" name="{{ form.password.html_name }}" value='{{ form.password.value|default_if_none:"password" }}'>
+						<span class="focus-input100"></span>
+					</div-->
+
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn">
+							Admin and User Creation
+						</button>
+                    </div>
+                </form>
+                <form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
+                    <div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn">
+							Get User's List
+						</button>
+					</div>
+
+					<div class="w-full text-center p-t-55">
+						<span class="txt2">
+							Designed by Hessam Hashemizadeh and Mahya Jamshidian
+						</span>
+
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
 
 <!--===============================================================================================-->
 	<script src='{% static "vendor/jquery/jquery-3.2.1.min.js" %}'></script>
@@ -84,5 +105,4 @@
 	<script src='{% static "js/main.js" %}'></script>
 
 </body>
-
 </html>

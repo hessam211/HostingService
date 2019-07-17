@@ -40,6 +40,7 @@ def admin_panel(request):
     return HttpResponse('not admin')
     #return render(request, 'admin-panel.html', {'q2': q2})
 
+
 @login_required(login_url='login')
 def user_view(request):
     q2 = Profile.objects.filter(is_admin=True)
@@ -49,3 +50,9 @@ def user_view(request):
         if use == q.user:
             return render(request, 'profile_list.html', {'q1': q1})
     return HttpResponse('You are Not admin')
+
+
+@login_required(login_url='login')
+def user_update(request, pk):
+    q1 = User.objects.filter(pk=pk)
+    return render(request, 'profile_detail.html', {'q1': q1})
