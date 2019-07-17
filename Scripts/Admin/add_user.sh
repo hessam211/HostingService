@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#state=/bin/bash ./check_user_exists.sh $2
 
-if [ "$state" != "NO" ]; 
+
+if [ "$(/bin/bash ./check_user_exists.sh $2)" != "NO" ]; 
 then
 
 	echo -e $"This User already exists.\nPlease Try Another one"
@@ -119,17 +119,19 @@ else
 fi
 
 mkdir /home/$2/ftp
+chmod a-w /home/$2/ftp
 chown $2:users /home/$2/ftp
 chmod 755 /home/$2/ftp
 mkdir /home/$2/ftp/files
 chown $2:users /home/$2/ftp/files
 
-if ! echo "$1" | sudo tee -a /etc/vsftpd.userlist
+if ! echo "$2" | sudo tee -a /etc/vsftpd.userlist
 then
 	echo $"ERROR: Not able to write in /etc/vsftpd.userlist"
 	exit;
 else
 	echo -e $"user added to /etc/vsftpd.userlist ftp access \n"
+	echo "test for $2 ftp account" > /home/$2/ftp/files/test.txt
 fi
 
 
