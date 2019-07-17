@@ -11,4 +11,4 @@ class UserForm(ModelForm):
 class ProfileForm(ModelForm):
     class Meta:
         model = Profile
-        fields = ('is_admin', 'domain_name', 'capacity')
+        fields = ('domain_name', 'capacity')

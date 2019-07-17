@@ -54,5 +54,5 @@ def user_view(request):
 
 @login_required(login_url='login')
 def user_update(request, pk):
-    q1 = User.objects.filter(pk=pk)
+    q1 = User.objects.filter(id=pk)
     return render(request, 'profile_detail.html', {'q1': q1})

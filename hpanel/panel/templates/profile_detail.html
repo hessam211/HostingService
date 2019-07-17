@@ -29,17 +29,18 @@
 <!--===============================================================================================-->
 </head>
 <body>
-
+	{% for user in q1 %}
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
 				<form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
+					{% csrf_token %}
 					<span class="login100-form-title p-b-53">
-						{{user.profile.domain_name}}
+						 Updating User "{{ user.username}}"
 					</span>
 
 
-					<!--div class="p-t-31 p-b-9">
+					<div class="p-t-31 p-b-9">
 						<span class="txt1">
 							Username
 						</span>
@@ -58,20 +59,44 @@
 					<div class="wrap-input100 validate-input" data-validate = "Password is required">
 						<input id="{{ form.password.id_for_label }}" class="input100" type="password" name="{{ form.password.html_name }}" value='{{ form.password.value|default_if_none:"password" }}'>
 						<span class="focus-input100"></span>
-					</div-->
+					</div>
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Email
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input id="{{ form.email.id_for_label }}" class="input100" type="email" name="{{ form.email.html_name }}" value='{{ form.email.value|default_if_none:"email"}}' >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Domain Name
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input">
+						<input id="{{ form_profile.domain_name.id_for_label }}" class="input100" type="text" name="{{ form_profile.domain_name.html_name }}" value='{{ form_profile.domain_name.value|default_if_none:"is Admin" }}'>
+						<span class="focus-input100"></span>
+					</div>
+										<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Capacity
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input" data-validate="Capacity is required">
+						<input id="{{ form_profile.capacity.id_for_label }}" class="input100" type="number" step="any" name="{{ form_profile.capacity.html_name }}" value='{{ form_profile.capacity.value|default_if_none:"is Admin" }}'>
+						<span class="focus-input100"></span>
+					</div>
 
 					<div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							Admin and User Creation
+							Update User
 						</button>
                     </div>
                 </form>
-                <form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
-                    <div class="container-login100-form-btn m-t-17">
-						<button class="login100-form-btn">
-							Get User's List
-						</button>
-					</div>
 
 					<div class="w-full text-center p-t-55">
 						<span class="txt2">
@@ -83,7 +108,7 @@
 			</div>
 		</div>
 	</div>
-
+{% endfor %}
 
 	<div id="dropDownSelect1"></div>
 
