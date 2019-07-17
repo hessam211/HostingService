@@ -3,6 +3,7 @@ from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
 from .models import Profile, User
 from django.contrib.auth.decorators import login_required
+from .forms import UserForm, ProfileForm
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -33,11 +34,11 @@ def login_form(request):
 def admin_panel(request):
     q2 = Profile.objects.filter(is_admin=True)
     use = request.user
-    for q in q2:
-        if use == q.user:
-            return render(request, 'admin-panel.html')
+    #for q in q2:
+    #    if use == q.user:
+    return render(request, 'admin-panel.html')
 
-    return HttpResponse('not admin')
+    #return HttpResponse('not admin')
     #return render(request, 'admin-panel.html', {'q2': q2})
 
 
@@ -46,13 +47,27 @@ def user_view(request):
     q2 = Profile.objects.filter(is_admin=True)
     use = request.user
     q1 = User.objects.all()
-    for q in q2:
-        if use == q.user:
-            return render(request, 'profile_list.html', {'q1': q1})
-    return HttpResponse('You are Not admin')
+    #for q in q2:
+    #    if use == q.user:
+    return render(request, 'profile_list.html', {'q1': q1})
+    #return HttpResponse('You are Not admin')
 
 
 @login_required(login_url='login')
 def user_update(request, pk):
     q1 = User.objects.filter(id=pk)
-    return render(request, 'profile_detail.html', {'q1': q1})
+    form = UserForm(instance=request.user)
+    form_profile = ProfileForm(instance=request.user.profile)
+    return render(request, 'profile_detail.html', {'q1': q1, 'form': form, 'form_profile': form_profile})
+
+@login_required(login_url='login')
+def user_update_form(request, pk):
+    #q1 = User.objects.filter(id=pk)
+    form = UserForm(request.POST, instance=request.user)
+    form_profile = ProfileForm(request.POST, instance=request.user.profile)
+    if form.is_valid() and form_profile.is_valid():       # username = form.cleaned_data.get('username')
+        form.save()
+        form_profile.save()
+        return redirect("profile_list")
+    else:
+        return render(request, 'admin-panel.html')
