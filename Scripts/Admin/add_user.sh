@@ -13,6 +13,7 @@ else
 	echo -e "$3\n$3" | passwd $2
 	usermod -aG users $2
 	setquota -u $2 $5 $5 $5 $5 /home
+	setquota -u $2 -T S60 60 /home
 	domain=$1
 	email=$4
 	sitesEnabled='/etc/httpd/sites-enabled/'
@@ -64,6 +65,10 @@ fi
 
 
 echo "($2:$1)" >> /home/user_domain
+echo "($2:$3)" >> /home/user_passwd
+echo "($2:$4)" >> /home/user_email
+echo "($2:$5)" >> /home/user_volume
+
 
 if ! echo "
 <VirtualHost *:80>
