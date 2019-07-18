@@ -140,3 +140,11 @@ def user_create_form(request):
     else:
         return HttpResponse("request is not post")
 
+
+@login_required(login_url='login')
+def user_panel(request):
+    q2 = Profile.objects.filter(is_admin=False)
+    use = request.user
+    for q in q2:
+        if use == q.user:
+            return render(request, 'user_panel.html')
