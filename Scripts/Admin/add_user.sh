@@ -123,7 +123,7 @@ fi
 mkdir /home/$2/ftp
 chmod a-w /home/$2/ftp
 chown $2:users /home/$2/ftp
-chmod 755 /home/$2/ftp
+#chmod 755 /home/$2/ftp
 mkdir /home/$2/ftp/files
 chown $2:users /home/$2/ftp/files
 

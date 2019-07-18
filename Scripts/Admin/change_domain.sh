@@ -12,16 +12,16 @@ sed -i "s|127.0.0.1\t$olddomain|127.0.0.1\t$newdomain|g" /etc/hosts
 
 sed -i "s|($username:$olddomain)|($username:$newdomain)|g" /home/user_domain 
 
-sed -i "s|ServerName\s$olddomain|ServerName\s$newdomain|g" /etc/httpd/sites-available/$olddomain.conf 
+sed -i "s|ServerName\s$olddomain|ServerName $newdomain|g" /etc/httpd/sites-available/$olddomain.conf 
 
-sed -i "s|<Directory\s/var/www/$olddomain>|<Directory\s/var/www/$newdomain>|g" /etc/httpd/sites-available/$olddomain.conf 
+sed -i "s|<Directory\s/var/www/$olddomain>|<Directory /var/www/$newdomain>|g" /etc/httpd/sites-available/$olddomain.conf 
 
-sed -i "s|DocumentRoot\s/var/www/$olddomain|DocumentRoot\s/var/www/$newdomain|g" /etc/httpd/sites-available/$olddomain.conf 
+sed -i "s|DocumentRoot\s/var/www/$olddomain|DocumentRoot /var/www/$newdomain|g" /etc/httpd/sites-available/$olddomain.conf 
 
 if [ -f /etc/ssl/$olddomain.crt ] ;
 then
-	sed -i "s|SSLCertificateFile\s/etc/ssl/$olddomain.crt|SSLCertificateFile\s/etc/ssl/$newdomain.crt|g" /etc/httpd/sites-available/$olddomain.conf 
-	sed -i "s|SSLCertificateKeyFile\s/etc/ssl/$olddomain.key|SSLCertificateKeyFile\s/etc/ssl/$newdomain.key|g" /etc/httpd/sites-available/$olddomain.conf 
+	sed -i "s|SSLCertificateFile\s/etc/ssl/$olddomain.crt|SSLCertificateFile /etc/ssl/$newdomain.crt|g" /etc/httpd/sites-available/$olddomain.conf 
+	sed -i "s|SSLCertificateKeyFile\s/etc/ssl/$olddomain.key|SSLCertificateKeyFile /etc/ssl/$newdomain.key|g" /etc/httpd/sites-available/$olddomain.conf 
 	mv /etc/ssl/$olddomain.key /etc/ssl/$newdomain.key
 	mv /etc/ssl/$olddomain.crt /etc/ssl/$newdomain.crt
 
