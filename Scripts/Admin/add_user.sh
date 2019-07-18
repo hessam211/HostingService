@@ -12,8 +12,8 @@ else
 	adduser $2 -m 
 	echo -e "$3\n$3" | passwd $2
 	usermod -aG users $2
-	setquota -u $2 1 $5 0 0 /home
-	setquota -u $2 -T 60 60 /home
+	setquota -u $2 1 $5 0 0 /
+	setquota -u $2 -T 60 60 /
 	domain=$1
 	email=$4
 	sitesEnabled='/etc/httpd/sites-enabled/'
@@ -51,8 +51,8 @@ fi
 if ! [ -d $rootDir ]; then
 
 	mkdir $rootDir
-	chown $2:users $rootDir
-	chmod 755 $rootDir
+	chown -R $2:users $rootDir
+	chmod -R 755 $rootDir
 
 	if ! echo "<?php echo phpinfo(); ?>" > $rootDir/phpinfo.php
 	then
@@ -76,9 +76,6 @@ if ! echo "
 	ServerName $domain
 	ServerAlias $domain
 	DocumentRoot $rootDir
-	<Directory />
-		AllowOverride All
-	</Directory>
 	<Directory $rootDir>
 		Options Indexes FollowSymLinks MultiViews
 		AllowOverride all
@@ -126,13 +123,13 @@ fi
 mkdir /home/$2/ftp
 chmod a-w /home/$2/ftp
 chown $2:users /home/$2/ftp
-chmod 755 /home/$2/ftp
+#chmod 755 /home/$2/ftp
 mkdir /home/$2/ftp/files
 chown $2:users /home/$2/ftp/files
 
-if ! echo "$2" | sudo tee -a /etc/vsftpd.userlist
+if ! echo "$2" | sudo tee -a /etc/vsftpd/user_list
 then
-	echo $"ERROR: Not able to write in /etc/vsftpd.userlist"
+	echo $"ERROR: Not able to write in /etc/vsftpd/user_list"
 	exit;
 else
 	echo -e $"user added to /etc/vsftpd.userlist ftp access \n"
