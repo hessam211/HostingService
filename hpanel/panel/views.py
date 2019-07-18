@@ -1,4 +1,4 @@
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, Http404
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate, logout
 from .models import Profile, User
@@ -148,3 +148,4 @@ def user_panel(request):
     for q in q2:
         if use == q.user:
             return render(request, 'user_panel.html')
+    return HttpResponse("<h1>You are not Authorized For This Page</h1>")
