@@ -45,7 +45,7 @@
                                 <th class="column4">Domain Name</th>
                                 <th class="column5">Capacity</th>
                                 <th class="column1">Edit</th>
-                                <th class="column3">Login</th>
+                                <th class="column1">Login</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -58,7 +58,7 @@
                                 <td class="column5">{{ user.profile.capacity}}</td>
                                 <td class="column1"><a  href="{% url "user-update"  user.id  %}">Click to Update</a></td>
                                 <!--td class="column3"><a  href="{% url "login-user-form"  user.id  %}">Click to Update</a></td-->
-                                <td class="column1">
+                                <td class="column6">
                                     <form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url "login-user-form"  user.id  %}">
                                         {% csrf_token %}
                                         <div class="container-login100-form-btn m-t-17">
