@@ -11,6 +11,8 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 
 
 def login_view(request):
+    if request.user.is_authenticated:
+        return redirect('admin-panel')
     form = AuthenticationForm()
     return render(request, 'index.html', {'form': form})
 

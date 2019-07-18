@@ -35,7 +35,7 @@
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
 				<form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
 					<span class="login100-form-title p-b-53">
-						Admin Panel
+						Welcome to your Admin Panel, {{user.username}}!
 					</span>
 
 
@@ -69,7 +69,7 @@
                 <form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
                     <div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							Get User's List
+							Users List and Edit
 						</button>
 					</div>
 
