@@ -24,65 +24,104 @@
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "vendor/daterangepicker/daterangepicker.css" %}'>
 <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href='{% static "vendor/perfect-scrollbar/perfect-scrollbar.css" %}'>
-<!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href='{% static "css/util.css" %}'>
 	<link rel="stylesheet" type="text/css" href='{% static "css/main.css" %}'>
 <!--===============================================================================================-->
 </head>
 <body>
-<div class="limiter">
-    <div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
-        <div class="container-table100">
-            <div class="wrap-table100">
-                <div class="table100">
-                    <table>
-                        <thead>
-                            <tr class="table100-head">
-                                <th class="column1">Username</th>
-                                <th class="column2">Is Admin</th>
-                                <th class="column3">Email Address</th>
-                                <th class="column4">Domain Name</th>
-                                <th class="column5">Capacity</th>
-                                <th class="column1">Edit</th>
-                                <th class="column3">Login</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for user in q1 %}
-                            <tr>
-                                <td class="column1">{{ user.username }}</td>
-                                <td class="column2">{{ user.profile.is_admin }}</td>
-                                <td class="column3">{{ user.email }}</td>
-                                <td class="column4">{{ user.profile.domain_name }}</td>
-                                <td class="column5">{{ user.profile.capacity}}</td>
-                                <td class="column1"><a  href="{% url "user-update"  user.id  %}">Click to Update</a></td>
-                                <!--td class="column3"><a  href="{% url "login-user-form"  user.id  %}">Click to Update</a></td-->
-                                <td class="column1">
-                                    <form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url "login-user-form"  user.id  %}">
-                                        {% csrf_token %}
-                                        <div class="container-login100-form-btn m-t-17">
-						                    <button class="login100-form-btn">
-							                    Login as this User
-						                    </button>
-					                    </div>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    <form method="get" action='{%url "admin-panel" %}'>
-                    <div class="container-login100-form-btn m-t-17">
+	<div class="limiter">
+		<div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
+			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
+				<form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url "user-create-form"  %}">
+					{% csrf_token %}
+					<span class="login100-form-title p-b-53">
+						 Creating User
+					</span>
+
+
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Username
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input id="{{ form.username.id_for_label }}" class="input100" type="text" name="{{ form.username.html_name }}" value='{{ form.username.value|default_if_none:"username"}}' >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Password
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Password is required">
+						<input id="{{ form.password.id_for_label }}" class="input100" type="password" name="{{ form.password.html_name }}" value='{{ form.password.value|default_if_none:"password" }}'>
+						<span class="focus-input100"></span>
+					</div>
+					<div class="p-t-31 p-b-9">
+						<span class="txt1">
+							Email
+						</span>
+					</div>
+					<div class="wrap-input100 validate-input" data-validate = "Username is required">
+						<input id="{{ form.email.id_for_label }}" class="input100" type="email" name="{{ form.email.html_name }}" value='{{ form.email.value|default_if_none:"email"}}' >
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Domain Name
+						</span>
+
+					</div>
+
+					<div class="wrap-input100">
+						<input id="{{ form_profile.domain_name.id_for_label }}" class="input100" type="text" name="{{ form_profile.domain_name.html_name }}" value='{{ form_profile.domain_name.value|default_if_none:"Domain" }}'>
+						<span class="focus-input100"></span>
+					</div>
+                    <div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Is Admin?
+						</span>
+
+					</div>
+					<div class="wrap-input100">
+						<!--input id="{{ form_profile.is_admin.id_for_label }}" class="input100" type="checkbox" name="{{ form_profile.is_admin.html_name }}" value='{{ form_profile.is_admin.value|default_if_none:"False" }}'>
+						<span class="focus-input100"></span-->
+                        {{form_profile.is_admin}}
+					</div>
+                    <div class="p-t-13 p-b-9">
+						<span class="txt1">
+							Capacity
+						</span>
+
+					</div>
+					<div class="wrap-input100 validate-input" data-validate="Capacity is required">
+						<input id="{{ form_profile.capacity.id_for_label }}" class="input100" type="number" step="any" name="{{ form_profile.capacity.html_name }}" value='{{ form_profile.capacity.value|default_if_none:"0" }}'>
+						<span class="focus-input100"></span>
+					</div>
+
+					<div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							Back to Admin Panel
+							Create User
 						</button>
-                    </div></form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+                    </div>
+                </form>
+
+					<div class="w-full text-center p-t-55">
+						<span class="txt2">
+							Designed by Hessam Hashemizadeh and Mahya Jamshidian
+						</span>
+
+					</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div id="dropDownSelect1"></div>
 
 <!--===============================================================================================-->
 	<script src='{% static "vendor/jquery/jquery-3.2.1.min.js" %}'></script>
@@ -102,5 +141,4 @@
 	<script src='{% static "js/main.js" %}'></script>
 
 </body>
-
 </html>

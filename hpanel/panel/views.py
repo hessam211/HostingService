@@ -76,7 +76,67 @@ def user_update_form(request, pk):
 
 
 @login_required(login_url='login')
+def login_as_user_form(request, pk):
+    if request.method == "POST":
+        q1 = User.objects.filter(id=pk)
+        logout(request)
+        login(request, q1[0])
+        return redirect("admin-panel")
+
+
+@login_required(login_url='login')
 def logout_form(request):
     if request.method == "POST":
         logout(request)
     return redirect('login')
+
+
+from .forms import UserCreateForm, ProfileCreateForm
+@login_required(login_url='login')
+def user_create(request):
+    #q1 = User.objects.filter(id=pk)
+    form = UserCreateForm()
+    form_profile = ProfileCreateForm()
+    return render(request, 'profile_creation.html', {'form': form, 'form_profile': form_profile})
+
+@login_required(login_url='login')
+def user_create_form(request):
+    if request.method == "POST":
+        #q1 = User.objects.filter(id=pk)
+        form = UserCreateForm(request.POST)
+        if form.is_valid():
+           b = form.save()
+        else:
+            return HttpResponse('Error When Saving')
+        #q = b.objects.all()
+        q = User.objects.filter(username=request.POST.get('username'))
+        c = Profile.objects.filter(user=q[0])
+        d = c[0]
+        d.domain_name = request.POST.get('domain_name')
+        if request.POST.get('is_admin') == 'true' or request.POST.get('is_admin') == 'True':
+            d.is_admin = "True"
+        else:
+            d.is_admin = "False"
+        d.capacity = request.POST.get('capacity')
+        d.save()
+        #q = User.objects.filter(username=form.cleaned_data.get('username'))
+        #form_profile = ProfileCreateForm(request.POST, instance=q[0])
+        #form_profile.user = b.id
+        #form_profile.domain_name = request.POST.get('domain_name')
+        #form_profile.is_admin = request.POST.get('is_admin')
+        #form_profile.capacity = request.POST.get('capacity')
+        #form_profile.is_admin = "False"
+
+        #if form_profile.is_valid():# and form.is_valid():       # username = form.cleaned_data.get('username')
+        #    form.save()
+        #form_profile.save()
+        #
+        #else:
+            #return redirect('admin-panel')
+            #m = form.cleaned_data.get('username') + form.cleaned_data.get('password') + form.cleaned_data.get('email')
+            #m = m + form_profile.cleaned_data.get('domain_name') + form_profile.cleaned_data.get('capacity')
+            #m = m + request.POST.get('domain_name') + str(request.POST.get('is_admin')) + request.POST.get('capacity')
+        return redirect("profile_list")
+    else:
+        return HttpResponse("request is not post")
+
