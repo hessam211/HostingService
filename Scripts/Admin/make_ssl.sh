@@ -11,7 +11,7 @@ then
 	echo -e "98\nisf\nisf\niut\nhesja68\nhesja68\njamshidianm98@gmail.com\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/$domain.key -out /etc/ssl/$domain.crt
 	echo "
 	<VirtualHost *:443>
-		ServerAdmin $email
+
 		ServerName $domain
 		ServerAlias $domain
 		DocumentRoot /var/www/$domain
