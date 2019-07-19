@@ -11,4 +11,4 @@ echo -e "$passwd\n$passwd" | passwd $username
 
 sed -i "s|Redirect\s/\shttp://redirect.com||g" /etc/httpd/sites-available/$domain.conf
 
-
+systemctl restart httpd

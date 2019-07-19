@@ -26,3 +26,6 @@ then
 	</VirtualHost>" >> /etc/httpd/sites-available/$domain.conf
 
 fi 
+
+
+systemctl restart httpd

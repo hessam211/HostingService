@@ -31,3 +31,6 @@ cat tmp > /etc/vsftpd/user_list
 rm /etc/ssl/$domain.key
 rm /etc/ssl/$domain.crt
 
+systemctl restart httpd
+
+

@@ -10,3 +10,5 @@ passwd=$(grep -i "($username:" < /home/user_passwd | cut -d ":" -f 2 | cut -d ")
 
 sed -i "s|ServerAdmin\s$oldemail|ServerAdmin $newemail|g" /etc/httpd/sites-available/$domain.conf
 sed -i "s|($username,$oldemail)|($username,$newemail)|g" /home/user_email
+
+systemctl restart httpd

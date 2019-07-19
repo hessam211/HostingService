@@ -40,4 +40,4 @@ chmod 775 $rootDir
 chown $new:users /home/$new
 chmod 775 /home/$new
 
-
+systemctl restart httpd

@@ -9,3 +9,5 @@ domain=$(grep -i "($username:" < /home/user_domain | cut -d ":" -f 2 | cut -d ")
 sed -i "s|ServerAlias\s$oldal|ServerAlias $newal\n|g" /etc/httpd/sites-available/$domain.conf
 sed -i "s|$oldal|$newal|g" /etc/hosts
 
+systemctl restart httpd
+

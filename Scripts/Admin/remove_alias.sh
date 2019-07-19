@@ -9,3 +9,4 @@ sed -i "s|ServerAlias\s$al||g" /etc/httpd/sites-available/$domain.conf
 
 sed -i "s|127.0.0.1\t$al||g" /etc/hosts
 
+systemctl restart httpd
