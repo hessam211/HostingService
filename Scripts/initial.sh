@@ -8,7 +8,7 @@ mkdir /etc/httpd/sites-enabled
 
 touch /home/user_domain
 touch /home/user_email
-touch /home/user_password
+touch /home/user_passwd
 touch /home/user_volume
 
 echo "IncludeOptional sites-enabled/*.conf" >> /etc/httpd/conf/httpd.conf
@@ -34,6 +34,7 @@ xferlog_std_format=YES
 
 
 chroot_local_user=YES
+allow_writeable_chroot=YES
 
 listen=NO
 
