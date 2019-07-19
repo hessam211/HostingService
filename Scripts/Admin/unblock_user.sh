@@ -9,6 +9,6 @@ passwd=$(grep -i "($username:" < /home/user_passwd | cut -d ":" -f 2 | cut -d ")
 
 echo -e "$passwd\n$passwd" | passwd $username
 
-sed -i "s|Redirect\s/\shttp://$domain||g" /etc/httpd/sites-available/$domain.conf
+sed -i "s|Redirect\s/\shttp://redirect.com||g" /etc/httpd/sites-available/$domain.conf
 
 
