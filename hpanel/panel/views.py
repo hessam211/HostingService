@@ -99,7 +99,19 @@ def login_as_user_form(request, pk):
             q1 = User.objects.filter(id=pk)
             logout(request)
             login(request, q1[0])
-            return redirect("user-panel")
+            return redirect("login")
+    else:
+        return HttpResponse("<h1>You are not Authorized For This Page</h1>")
+
+
+@login_required(login_url='login')
+def delete_user_form(request, pk):
+    if check_admin(request.user):
+        if request.method == "POST":
+            q1 = User.objects.filter(id=pk)
+            if q1[0].username != 'root' or not None:
+                q1[0].delete()
+            return redirect("profile_list")
     else:
         return HttpResponse("<h1>You are not Authorized For This Page</h1>")
 
