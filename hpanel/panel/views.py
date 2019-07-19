@@ -190,7 +190,7 @@ def change_password_form(request):
         return HttpResponse("<h1>You are not Authorized For This Page</h1>")
     else:
         form = PasswordChange(request.POST, instance=request.user)
-        if form.is_valid():
+        if form.is_valid() and request.POST.get('password') == request.POST.get('pass2'):
             b = form.save()
             b.set_password(request.POST.get('password'))
             b.save()
