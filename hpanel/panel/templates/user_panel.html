@@ -33,9 +33,9 @@
 	<div class="limiter">
 		<div class="container-login100" style="background-image: url('{% static "images/bg-01.jpg" %}');">
 			<div class="wrap-login100 p-l-110 p-r-110 p-t-62 p-b-33">
-				<form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'user-create' %}">
+				<form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'change-password' %}">
 					<span class="login100-form-title p-b-53">
-						Welcome to your Admin Panel, {{user.username}}!
+						User Panel for {{user.username}}!
 					</span>
 
 
@@ -62,14 +62,14 @@
 
 					<div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							Admin and User Creation
+							Change Password
 						</button>
                     </div>
                 </form>
                 <form class="login100-form validate-form flex-sb flex-w" method="get" action="{% url 'profile_list' %}">
                     <div class="container-login100-form-btn m-t-17">
 						<button class="login100-form-btn">
-							Users List and Edit
+							Change Alias
 						</button>
 					</div>
 

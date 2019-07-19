@@ -7,9 +7,9 @@ from django.dispatch import receiver
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    is_admin = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False, blank=True, null=True)
     domain_name = models.CharField(max_length=20, blank=True, null=True)
-    capacity = models.DecimalField(max_digits=5, decimal_places=1)
+    capacity = models.DecimalField(max_digits=5, decimal_places=1, blank=True, null=True)
 
     def __str__(self):
         return f"{self.user.username} Profile"
@@ -18,7 +18,10 @@ class Profile(models.Model):
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
-        Profile.objects.create(user=instance)
+        Profile.objects.get_or_create(user=instance)
+
+
+post_save.connect(create_user_profile, sender=User)
 
 
 @receiver(post_save, sender=User)

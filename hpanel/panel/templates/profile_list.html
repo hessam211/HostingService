@@ -43,19 +43,56 @@
                                 <th class="column2">Is Admin</th>
                                 <th class="column3">Email Address</th>
                                 <th class="column4">Domain Name</th>
-                                <th class="column5">Maximum Capacity</th>
-                                <th class="column6">Edit</th>
+                                <th class="column5">Capacity</th>
+                                <th class="column1">Edit</th>
+                                <th class="column1">Login</th>
+                                <th class="column1">Delete</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for user in q1 %}
+                            {% for t in q1 %}
                             <tr>
-                                <td class="column1">{{ user.username }}</td>
-                                <td class="column2">{{ user.profile.is_admin }}</td>
-                                <td class="column3">{{ user.email }}</td>
-                                <td class="column4">{{ user.profile.domain_name }}</td>
-                                <td class="column5">{{ user.profile.capacity}}</td>
-                                <td class="column6"><a  href="{% url "user-update"  user.id  %}">Click to Update</a></td>
+                                <td class="column1">{{ t.username }}</td>
+                                <td class="column2">{{ t.profile.is_admin }}</td>
+                                <td class="column3">{{ t.email }}</td>
+                                <td class="column4">{{ t.profile.domain_name }}</td>
+                                <td class="column5">{{ t.profile.capacity}}</td>
+                                <td class="column1">
+                                    {% if not t.username == 'root' %}
+                                        <a  href="{% url "user-update"  t.id  %}">Click to Update</a>
+                                    {% else %}
+                                        you can't edit root
+                                    {% endif %}
+                                </td>
+                                <!--td class="column3"><a  href="{% url "login-user-form"  user.id  %}">Click to Update</a></td-->
+                                <td class="column6">
+                                    <form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url "login-user-form"  t.id  %}">
+                                        {% csrf_token %}
+                                        <div class="container-login100-form-btn m-t-17">
+                                            {% if not t.profile.is_admin or user.username == 'root' %}
+						                        <button class="login100-form-btn">
+							                        Login as this User
+						                        </button>
+                                            {% else %}
+                                            you can't login as admin
+                                            {% endif %}
+					                    </div>
+                                    </form>
+                                </td>
+                                <td class="column6">
+                                    <form class="login100-form validate-form flex-sb flex-w" method="post" action="{% url "delete-user-form"  t.id  %}">
+                                        {% csrf_token %}
+                                        <div class="container-login100-form-btn m-t-17">
+                                            {% if t.username != 'root' %}
+						                        <button class="login100-form-btn">
+							                        Delete User
+						                        </button>
+                                            {% else %}
+                                                Can't delete Root
+                                            {% endif %}
+					                    </div>
+                                    </form>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>
