@@ -10,4 +10,4 @@ oldpasswd=$(grep -i "($username:" < /home/user_passwd | cut -d ":" -f 2 | cut -d
 
 echo -e "$newpasswd\n$newpasswd" | passwd $username
 
-sed -i "s|($username:$oldpasswd)|($username:$newpasswd)|g" /home/user_password
+sed -i "s|($username:$oldpasswd)|($username:$newpasswd)|g" /home/user_passwd
