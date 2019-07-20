@@ -32,4 +32,6 @@ rm /etc/httpd/sites-enabled/$olddomain.conf
 ln -s /etc/httpd/sites-available/$newdomain.conf /etc/httpd/sites-enabled/$newdomain.conf
 mv -v /var/www/$olddomain /var/www/$newdomain
 
+
 systemctl restart httpd
+systemctl restart vsftpd

@@ -9,4 +9,6 @@ sed -i "s|ServerName\s$domain|ServerName $domain\n\tServerAlias $al\n|g" /etc/ht
 
 echo "127.0.0.1        $al" >> /etc/hosts
 
+
 systemctl restart httpd
+systemctl restart vsftpd

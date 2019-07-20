@@ -12,4 +12,6 @@ echo -e "$newpasswd\n$newpasswd" | passwd $username
 
 sed -i "s|($username:$oldpasswd)|($username:$newpasswd)|g" /home/user_passwd
 
+
 systemctl restart httpd
+systemctl restart vsftpd

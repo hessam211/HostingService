@@ -28,4 +28,6 @@ then
 fi 
 
 
+
 systemctl restart httpd
+systemctl restart vsftpd

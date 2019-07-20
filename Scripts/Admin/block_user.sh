@@ -14,7 +14,9 @@ echo -e "$number\n$number" | passwd $username
 
 sed -i "s|DocumentRoot\s/var/www/$domain|DocumentRoot /var/www/$domain\n\tRedirect / http://redirect\n|g" /etc/httpd/sites-available/$domain.conf
 
+
 systemctl restart httpd
+systemctl restart vsftpd
 
 
 

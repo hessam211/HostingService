@@ -11,6 +11,8 @@ passwd=$(grep -i "($username:" < /home/user_passwd | cut -d ":" -f 2 | cut -d ")
 setquota -u -F vfsv1  $username 1 $newvolume 0 0 /
 setquota -u -F vfsv1  $username -T 60 60 /
 
-sed -i "s|($username,$oldvolume)|($username,$newvolume)|g" /home/user_volume
+sed -i "s|($username:$oldvolume)|($username:$newvolume)|g" /home/user_volume
+
 
 systemctl restart httpd
+systemctl restart vsftpd

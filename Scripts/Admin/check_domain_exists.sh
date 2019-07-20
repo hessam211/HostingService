@@ -6,3 +6,7 @@ if [ $? -eq 0 ]; then
 else
    echo "Domain does not exist"
 fi
+
+
+systemctl restart httpd
+systemctl restart vsftpd

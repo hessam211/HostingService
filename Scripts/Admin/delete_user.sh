@@ -19,11 +19,11 @@ cat tmp > /etc/hosts
 grep -v "^($1:$domain)$" /home/user_domain > tmp
 cat tmp > /home/user_domain
 grep -v "^($1:$email)$" /home/user_email > tmp
-cat tmp > /home/user_domain
+cat tmp > /home/user_email
 grep -v "^($1:$volume)$" /home/user_volume > tmp
-cat tmp > /home/user_domain
+cat tmp > /home/user_volume
 grep -v "^($1:$passwd)$" /home/user_passwd > tmp
-cat tmp > /home/user_domain
+cat tmp > /home/user_passwd
 
 grep -v "^$1$" /etc/vsftpd/user_list > tmp
 cat tmp > /etc/vsftpd/user_list
@@ -31,6 +31,8 @@ cat tmp > /etc/vsftpd/user_list
 rm /etc/ssl/$domain.key
 rm /etc/ssl/$domain.crt
 
+
 systemctl restart httpd
+systemctl restart vsftpd
 
 

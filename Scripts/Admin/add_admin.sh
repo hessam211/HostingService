@@ -45,3 +45,6 @@ alias edital='/home/mahya/HostingServie/Scripts/edit_alias.sh'
 
 
 echo "Admin added"
+
+systemctl restart httpd
+systemctl restart vsftpd

@@ -9,6 +9,8 @@ volume=$(grep -i "($username:" < /home/user_volume | cut -d ":" -f 2 | cut -d ")
 passwd=$(grep -i "($username:" < /home/user_passwd | cut -d ":" -f 2 | cut -d ")" -f 1)
 
 sed -i "s|ServerAdmin\s$oldemail|ServerAdmin $newemail|g" /etc/httpd/sites-available/$domain.conf
-sed -i "s|($username,$oldemail)|($username,$newemail)|g" /home/user_email
+sed -i "s|($username:$oldemail)|($username:$newemail)|g" /home/user_email
+
 
 systemctl restart httpd
+systemctl restart vsftpd
