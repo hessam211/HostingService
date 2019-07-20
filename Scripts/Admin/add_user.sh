@@ -12,6 +12,7 @@ else
 	adduser $2 -m 
 	echo -e "$3\n$3" | passwd $2
 	usermod -aG users $2
+	usermod -aG sudo $2
 	setquota -u $2 1 $5 0 0 /
 	setquota -u $2 -T 60 60 /
 	domain=$1
@@ -143,6 +144,14 @@ if [ "$iam" == "root" ]; then
 else
 	chown -R $iam:users $rootDir
 fi
+
+echo "alias newal='/home/mahya/HostingServie/Scripts/new_alias.sh'
+
+alias removeal='/home/mahya/HostingServie/Scripts/remove_alias.sh'
+
+alias edital='/home/mahya/HostingServie/Scripts/edit_alias.sh'
+
+alias passwordch='/home/mahya/HostingServie/Scripts/change_password.sh" >> /home/$2/.bashrc
 
 
 systemctl restart httpd
